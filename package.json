@@ -1,0 +1,21 @@
+{
+  "name": "minor-ii",
+  "workspaces":[
+    "apps/*"
+  ],
+  "module": "index.ts",
+  "scripts": {
+    "dev:server":"bun --cwd apps/server dev",
+    "dev:client":"bun --cwd apps/client dev",
+    "dev":"concurrently --names \"SERVER,CLIENT\" --prefix-colors \"blue,green\" \"bun run dev:server\" \"bun run dev:client\""
+  },
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "concurrently": "^9.1.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
