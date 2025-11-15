@@ -1,4 +1,3 @@
-// packages/web/src/components/LoginButton.tsx
 import React, { useState, useEffect } from "react";
 import {
   GoogleAuthProvider,
@@ -6,8 +5,9 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import LoginButton from "./LoginButton/LoginButton";
 
-const LoginButton = () => {
+const Login = () => {
   const [user, setUser] = useState(null);
   const [apiResponse, setApiResponse] = useState("");
 
@@ -24,7 +24,6 @@ const LoginButton = () => {
     try {
       await signInWithPopup(auth, provider);
       // The onAuthStateChanged listener will handle setting the user
-     
     } catch (error) {
       console.error("Error during sign-in:", error);
     }
@@ -57,17 +56,17 @@ const LoginButton = () => {
     <div>
       {console.log(user)}
       {user ? (
-       <div> 
-          <p>Welcome, {user.email}</p>
+        <div>
+          <p>Welcome, {user.displayName}</p>
           <button onClick={() => auth.signOut()}>Sign Out</button>
           <button onClick={callProtectedApi}>Call Protected API</button>
         </div>
       ) : (
-        <button onClick={handleGoogleLogin}>Sign in with Google</button>
+        <LoginButton type = {0} onClick={handleGoogleLogin} />
       )}
       <pre>{apiResponse}</pre>
     </div>
   );
 };
 
-export default LoginButton;
+export default Login;
