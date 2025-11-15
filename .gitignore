@@ -5,6 +5,9 @@ Notes
 apps/server/3000;
 apps/server/3001;
 
+#firebase
+service-account.json
+
 # output
 out
 dist

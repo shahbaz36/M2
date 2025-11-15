@@ -1,18 +1,11 @@
-import { useEffect } from "react";
+
 import "./App.css";
+import LoginButton from "./Components/Login";
 
 function App() {
 
-  useEffect(()=>{
-   const checkProxy = async () =>{
-    const response = await fetch('/api/v1/user/test')
-    const data = await response.json();
-    console.log(data)
-   }
-   checkProxy();
-  },[])
-
-  return <div>Hello from Client App!</div>;
+  return <div><p>Hello from the client!</p>
+    <LoginButton/></div>;
 }
 
 export default App;
