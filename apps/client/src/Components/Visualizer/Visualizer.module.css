@@ -1,0 +1,99 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+/* --- The Center Orb --- */
+.orb {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-color);
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- State: AI Speaking (Gold) --- */
+.orb.speaking {
+  background-color: var(--bg-dark);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 40px var(--primary-glow);
+}
+
+/* --- State: User Listening (Sage Green) --- */
+.orb.listening {
+  background-color: var(--bg-dark);
+  border-color: var(--secondary);
+  color: var(--secondary);
+  box-shadow: 0 0 40px var(--secondary-glow);
+}
+
+/* --- State: Processing (Pulse) --- */
+.orb.processing {
+  border-color: var(--text-muted);
+  color: var(--text-muted);
+  animation: breathe 2s infinite ease-in-out;
+}
+
+/* --- The Ripple/Ring Animation --- */
+.ring {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  z-index: 0;
+  opacity: 0;
+}
+
+/* When AI speaks, the ring pulses Gold */
+.speaking .ring {
+  background-color: var(--primary);
+  animation: ripple 2s infinite cubic-bezier(0, 0.2, 0.8, 1);
+}
+
+/* When User speaks, the ring pulses Green */
+.listening .ring {
+  background-color: var(--secondary);
+  animation: ripple 2s infinite cubic-bezier(0, 0.2, 0.8, 1);
+}
+
+/* --- Keyframes --- */
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.92); opacity: 0.7; }
+}
+
+/* --- Status Text --- */
+.statusText {
+  margin-top: 48px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.8;
+}

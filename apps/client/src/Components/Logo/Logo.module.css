@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+}
+
+/* The SVG Icon Container */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The Text 'Intervu' */
+.text {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+}
+
+/* The '.ai' accent */
+.accent {
+  color: var(--primary);
+}

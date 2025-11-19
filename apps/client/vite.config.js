@@ -11,6 +11,7 @@ export default defineConfig({
     }),
   ],
   server: {
+    allowedHosts: ["undividedly-spirited-luca.ngrok-free.dev"],
     proxy: {
       "/api": {
         target: "http://localhost:3000", // The address of the server
