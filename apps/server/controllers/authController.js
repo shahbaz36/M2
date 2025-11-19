@@ -1,4 +1,5 @@
 const admin = require('firebase-admin');
+const {db} = require('../firebaseConfig')
 
 const checkAuth = async (req, res, next) => {
   const authHeader = req.headers.authorization;

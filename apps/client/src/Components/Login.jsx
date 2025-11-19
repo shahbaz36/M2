@@ -10,12 +10,45 @@ import LoginButton from "./LoginButton/LoginButton";
 const Login = () => {
   const [user, setUser] = useState(null);
   const [apiResponse, setApiResponse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
-    // Listen for auth state changes
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setIsLoading(true);
+      try {
+        // Listen for auth state changes
+        if (currentUser) {
+          console.log("User logged in");
+          setUser(currentUser);
+          console.log(currentUser);
+
+          //Sync user with the server : if doesn't exit add to db
+          const idToken = await currentUser.getIdToken();
+          console.log(idToken)
+          const res = await fetch("/api/v1/user/sync", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          });
+
+          if (!res.ok) throw new Error("Something went wrong while fetching ");
+
+          const data = await res.json();
+          console.log(data);
+        } else {
+          setUser(null);
+          console.log("Logging out or no user");
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     });
+
+    //cleanup
     return () => unsubscribe();
   }, []);
 
@@ -38,7 +71,7 @@ const Login = () => {
     const idToken = await user.getIdToken();
 
     try {
-      const res = await fetch("/api/v1/user/test", {
+      const res = await fetch("/api/v1/user/me", {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },
@@ -54,7 +87,6 @@ const Login = () => {
 
   return (
     <div>
-      {console.log(user)}
       {user ? (
         <div>
           <p>Welcome, {user.displayName}</p>
@@ -62,7 +94,7 @@ const Login = () => {
           <button onClick={callProtectedApi}>Call Protected API</button>
         </div>
       ) : (
-        <LoginButton type = {0} onClick={handleGoogleLogin} />
+        <LoginButton type={0} onClick={handleGoogleLogin} />
       )}
       <pre>{apiResponse}</pre>
     </div>
